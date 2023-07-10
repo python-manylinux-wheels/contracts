@@ -1,5 +1,4 @@
 import sys
-from inspect import ArgSpec
 
 import six
 
@@ -12,6 +11,7 @@ else:  # pragma: no cover
     FullArgSpec = namedtuple('FullArgSpec', 'args varargs varkw defaults'
                              ' kwonlyargs kwonlydefaults annotations')
     from inspect import getargspec as _getargspec
+    from inspect import ArgSpec
 
     def getargspec(function):
         # print 'hasattr im_func', hasattr(function, 'im_func')
@@ -150,6 +150,3 @@ else:  # pragma: no cover
                 f_name, 'at least' if defaults else 'exactly', num_required,
                 'arguments' if num_required > 1 else 'argument', num_total))
         return arg2value
-
-
-
