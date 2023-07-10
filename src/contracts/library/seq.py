@@ -38,7 +38,7 @@ class Seq(Contract):
 
             return
 
-        if not isinstance(value, collections.Sequence):
+        if not isinstance(value, collections.abc.Sequence):
             error = 'Expected a Sequence, got %r.' % value.__class__.__name__
             raise ContractNotRespected(self, error, value, context)
 

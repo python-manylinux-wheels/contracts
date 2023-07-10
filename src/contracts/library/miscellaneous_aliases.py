@@ -14,32 +14,32 @@ def m_new_contract(name, f):
     from contracts.library.extensions import CheckCallable
     from contracts.library.extensions import Extension
     Extension.registrar[name] = CheckCallable(f)
-    
 
-m_new_contract('Container', ist(collections.Container))
+
+m_new_contract('Container', ist(collections.abc.Container))
 # todo: Iterable(x)
-m_new_contract('Iterable', ist(collections.Iterable))
+m_new_contract('Iterable', ist(collections.abc.Iterable))
 
-m_new_contract('Hashable', ist(collections.Hashable))
+m_new_contract('Hashable', ist(collections.abc.Hashable))
 
 
 
-m_new_contract('Iterator', ist(collections.Iterator))
-m_new_contract('Sized', ist(collections.Sized))
-m_new_contract('Callable', ist(collections.Callable))
-m_new_contract('Sequence', ist(collections.Sequence))
-m_new_contract('Set', ist(collections.Set))
-m_new_contract('MutableSequence', ist(collections.MutableSequence))
-m_new_contract('MutableSet', ist(collections.MutableSet))
-m_new_contract('Mapping', ist(collections.Mapping))
-m_new_contract('MutableMapping', ist(collections.MutableMapping))
+m_new_contract('Iterator', ist(collections.abc.Iterator))
+m_new_contract('Sized', ist(collections.abc.Sized))
+m_new_contract('Callable', ist(collections.abc.Callable))
+m_new_contract('Sequence', ist(collections.abc.Sequence))
+m_new_contract('Set', ist(collections.abc.Set))
+m_new_contract('MutableSequence', ist(collections.abc.MutableSequence))
+m_new_contract('MutableSet', ist(collections.abc.MutableSet))
+m_new_contract('Mapping', ist(collections.abc.Mapping))
+m_new_contract('MutableMapping', ist(collections.abc.MutableMapping))
 #new_contract('MappingView', ist(collections.MappingView))
 #new_contract('ItemsView', ist(collections.ItemsView))
 #new_contract('ValuesView', ist(collections.ValuesView))
 
 
 # Not a lambda to have better messages
-def is_None(x): 
+def is_None(x):
     return x is None
 
 m_new_contract('None', is_None)

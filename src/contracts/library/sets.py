@@ -13,7 +13,7 @@ class ASet(Contract):
         self.elements_contract = elements_contract
 
     def check_contract(self, context, value, silent):
-        if not isinstance(value, collections.Set):
+        if not isinstance(value, collections.abc.Set):
             error = 'Expected a set, got %r.' % describe_type(value)
             raise ContractNotRespected(self, error, value, context)
 

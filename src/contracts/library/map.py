@@ -13,7 +13,7 @@ class Map(Contract):
         self.value_c = value_c
 
     def check_contract(self, context, value, silent):
-        if not isinstance(value, collections.Mapping):
+        if not isinstance(value, collections.abc.Mapping):
             error = 'Expected a Mapping, got %r.' % value.__class__.__name__
             raise ContractNotRespected(contract=self, error=error,
                                        value=value, context=context)
