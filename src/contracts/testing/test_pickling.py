@@ -3,6 +3,7 @@ from contracts import ContractNotRespected, parse, Contract
 from contracts.test_registrar import (semantic_fail_examples,
     contract_fail_examples, good_examples)
 import pickle
+import pytest
 
 
 def check_exception_pickable(contract, value):
@@ -20,12 +21,14 @@ def check_exception_pickable(contract, value):
         # raise Exception(msg)
 
 
-def test_exceptions_are_pickable():
-    for contract, value, exact in semantic_fail_examples:  # @UnusedVariable
-        yield check_contracts_fail, contract, value, ContractNotRespected
-        #ContractSemanticError
-    for contract, value, exact in contract_fail_examples:  # @UnusedVariable
-        yield check_contracts_fail, contract, value, ContractNotRespected
+class TestExceptionsArePickable():
+    @pytest.mark.parametrize("contract,value,exact", semantic_fail_examples)
+    def test_semantic_fail_examples(self, contract, value, exact):
+        check_contracts_fail(contract, value, ContractNotRespected)
+
+    @pytest.mark.parametrize("contract,value,exact", contract_fail_examples)
+    def test_contract_fail_examples(self, contract, value, exact):
+        check_contracts_fail(contract, value, ContractNotRespected)
 
 
 def check_contract_pickable(contract):
@@ -44,11 +47,15 @@ def check_contract_pickable(contract):
     assert c == c2
 
 
-def test_contracts_are_pickable():
-    allc = (good_examples + semantic_fail_examples + contract_fail_examples)
-    for contract, _, _ in allc:
-        if isinstance(contract, list):
-            for c in contract:
-                yield check_contract_pickable, c
-        else:
-            yield check_contract_pickable, contract
+contracts = []
+allc = (good_examples + semantic_fail_examples + contract_fail_examples)
+for contract, _, _ in allc:
+    if isinstance(contract, list):
+        contracts.extend(contract)
+    else:
+        contracts.append(contract)
+
+
+@pytest.mark.parametrize("contract", contracts)
+def test_contract_is_pickable(contract):
+    check_contract_pickable(contract)
