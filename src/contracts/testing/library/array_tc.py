@@ -151,7 +151,7 @@ fail('seq[6]', np.ones((2, 4)))
 good('finite', 1)
 good('finite', 0)
 good('finite', -1)
-good('finite', np.float(1))
+good('finite', 1.0)
 fail('finite', np.inf)
 fail('finite', np.nan)
 

@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 from contracts import new_contract, check, Contract, contract
 from contracts.library.extensions import identifier_expression
@@ -341,9 +342,7 @@ def check_valid_identifier(e):
     check(e, 42)
 
 
-def test_valid_identifiers():
-
-    for e in examples_valid:
-        yield check_valid_identifier, e
-
-
+class TestValidIdentifiers():
+    @pytest.mark.parametrize("identifier", examples_valid)
+    def test_example(self, identifier):
+        check_valid_identifier(identifier)
