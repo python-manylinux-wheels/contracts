@@ -1,22 +1,11 @@
 from abc import abstractmethod
 import functools
-import nose
+import pytest
 import unittest
 
 from contracts import ContractNotRespected, contract, ContractsMeta
 from contracts import CannotDecorateClassmethods
 from contracts import with_metaclass
-
-def expected_failure(test):
-    @functools.wraps(test)
-    def inner(*args, **kwargs):
-        try:
-            test(*args, **kwargs)
-        except Exception:
-            raise nose.SkipTest
-        else:
-            raise AssertionError('Failure expected')
-    return inner
 
 
 class TestMeta(unittest.TestCase):
@@ -81,7 +70,7 @@ class TestMeta(unittest.TestCase):
         self.assertRaises(ContractNotRespected, b.f, 0)
         self.assertRaises(ContractNotRespected, b.g, 0)
 
-    @expected_failure
+    @pytest.mark.xfail(raises=Exception)
     def test_static1(self):
 
         class A(with_metaclass(ContractsMeta, object)):
@@ -101,7 +90,7 @@ class TestMeta(unittest.TestCase):
 
         self.assertRaises(ContractNotRespected, B.f, 0) # this doesn't work
 
-    @expected_failure
+    @pytest.mark.xfail(raises=Exception)
     def test_classmethod1(self):
 
         class A(with_metaclass(ContractsMeta, object)):
@@ -123,7 +112,7 @@ class TestMeta(unittest.TestCase):
 
         self.assertRaises(ContractNotRespected, B.f, 0) # this doesn't work
 
-    @expected_failure
+    @pytest.mark.xfail(raises=Exception)
     def test_classmethod1ns(self):
 
         class A(with_metaclass(ContractsMeta, object)):
